@@ -48,16 +48,6 @@
     <WriteLinesToFile Condition="!Exists('$(OutputPath)/../Dynamo.config')" File="$(OutputPath)/../Dynamo.config" Lines="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&#xD;&#xA;&lt;configuration&gt;&#xD;&#xA;  &lt;appSettings&gt;&#xD;&#xA;     &lt;add key=&quot;DynamoRuntime&quot; value=&quot;$(DYNAMOAPI)&quot;/&gt;&#xD;&#xA;  &lt;/appSettings&gt;&#xD;&#xA;&lt;/configuration&gt;&#xD;&#xA;" Overwrite="true" />
   </Target>
   <ItemGroup>
-    <Reference Include="RevitAPI">
-      <HintPath>$(REVITAPI)\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>$(REVITAPI)\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(SolutionDir)AssemblySharedInfoGenerator\AssemblySharedInfo.cs" Link="Properties\AssemblySharedInfo.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -105,6 +95,14 @@
     <!--Exclude GregRevitAuth runtime to avoid having the transitive deps copied to the output. PrivateAssets does not work for that. -->
     <PackageReference Include="GregRevitAuth" Version="$(GregRevitAuth_VERSION)" ExcludeAssets="runtime" GeneratePathProperty="true" />
     <PackageReference Include="pythonnet_py38_win" Version="$(PYTHONNET_PY38_VERSION)" ExcludeAssets="runtime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2027\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2027\RevitAPIUI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Target Name="Copy dll" AfterTargets="Build">
     <Copy SourceFiles="$(PkgDynamoVisualProgramming_Core)\lib\$(DCoreLibSubFolder)\DynamoInstallDetective.dll" DestinationFolder="$(OutputPath)\.." />
